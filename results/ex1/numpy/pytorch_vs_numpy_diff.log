@@ -2,8 +2,8 @@ PyTorch file: /Users/ElAmoen/Documents/GitHub/cs330-finalproject/results/ex1/cos
 NumPy file:   /Users/ElAmoen/Documents/GitHub/cs330-finalproject/results/ex1/numpy/costs_raw_numpy.npz
 
 Per-optimizer absolute differences:
-adagrad: max_abs=0.00492513, mean_abs=0.000835209
+adagrad: max_abs=0.215743, mean_abs=0.180127
 adam: max_abs=0.0022503, mean_abs=0.000128308
-rmsprop: max_abs=0.00429506, mean_abs=0.000168484
-sgd: max_abs=0.000136484, mean_abs=3.64265e-05
-sgd_nesterov: max_abs=0.000720875, mean_abs=6.49502e-05
+rmsprop: max_abs=0.00652372, mean_abs=0.0031451
+sgd: max_abs=0.302409, mean_abs=0.268501
+sgd_nesterov: max_abs=0.0698477, mean_abs=0.065064
