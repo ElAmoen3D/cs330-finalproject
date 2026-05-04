@@ -30,6 +30,6 @@
 
 - Entry 14: Notices 1/sqrt(t) decay affects every optimizer. Made changes to only affect ADAM
 
-- Entry 15: Tested larger LR values universally. Adam seems to not converge for LR=0.001. 
+- Entry 15: Tested larger LR values universally. Adam converging very slowly, SGD now faster than both it and RMSProp?
 
 - Entry 16: added tests for larger datasets, left in ./results/ablation
