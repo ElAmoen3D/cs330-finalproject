@@ -499,6 +499,37 @@ def main():
     else:
         print(f"PyTorch outputs not found at {pytorch_path}; skipping diff log.")
 
+    # Ablation: fixed base_lr=0.1 for all optimizers
+    ablation_dir = (pathlib.Path(__file__).parent / ".." / "results" / "ablation").resolve()
+    ablation_dir.mkdir(parents=True, exist_ok=True)
+    ablation_cfg = yaml.safe_load(yaml.safe_dump(cfg))
+    for opt_name in ablation_cfg["optimizers"]:
+        ablation_cfg["optimizers"][opt_name]["base_lr"] = 0.1
+
+    ablation_costs: dict[str, list] = {name: [] for name in opt_names}
+    for opt_name in opt_names:
+        print(f"=== Ablation (base_lr=0.1) Optimiser: {DISPLAY_NAMES[opt_name]} ===")
+        for seed in seeds:
+            costs = run_trial(opt_name, seed, ablation_cfg)
+            ablation_costs[opt_name].append(costs)
+        print()
+
+    ablation_costs_np = {
+        name: np.array(costs) for name, costs in ablation_costs.items()
+    }
+
+    ablation_fig = ablation_dir / "figure1_mnist_logistic_numpy_lr0.1.png"
+    make_figure(ablation_costs_np, ablation_cfg, str(ablation_fig))
+
+    ablation_seed0_dir = ablation_dir / "no_avg"
+    ablation_seed0_dir.mkdir(parents=True, exist_ok=True)
+    ablation_seed0 = ablation_seed0_dir / "figure1_mnist_logistic_seed0_numpy_lr0.1.png"
+    make_figure_seed0(ablation_costs_np, ablation_cfg, str(ablation_seed0))
+
+    ablation_np_path = ablation_dir / "costs_raw_numpy_lr0.1.npz"
+    np.savez(ablation_np_path, **ablation_costs_np)
+    print(f"Ablation raw costs saved → {ablation_np_path}")
+
 
 if __name__ == "__main__":
     main()
