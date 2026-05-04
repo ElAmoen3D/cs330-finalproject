@@ -1,0 +1,116 @@
+# Hyperparameters for MNIST Logistic Regression replication
+# Adam paper (Kingma & Ba, ICLR 2015), Figure 1 (left panel)
+
+experiment:
+  dataset: MNIST
+  data_path: ../data/mnist
+  task: multiclass_logistic_regression
+  input_dim: 784        # raw pixel vectors, no preprocessing
+  num_classes: 10
+  num_epochs: 45        # matches x-axis of Figure 1 (0–45 epochs)
+  batch_size: 128
+  l2_lambda: 0.0001     # L2 regularization weight
+  seeds: [0, 1, 2]      # averaged over 3 seeds; add more for tighter bands
+
+# Learning-rate schedule: alpha_t = alpha / sqrt(t)
+# where t is the current epoch index (1-indexed)
+lr_schedule:
+  rule: inv_sqrt_epoch  # alpha_t = base_lr / sqrt(epoch)
+
+# Per-optimizer base learning rates (alpha in the schedule above)
+# Tuned to roughly match Figure 1 convergence curves
+optimizers:
+  adam:
+    base_lr: 0.001      # alpha (paper default)
+    beta1: 0.9          # paper default
+    beta2: 0.999        # paper default
+    epsilon: 1.0e-8     # paper default
+    implementation: custom  # hand-rolled; no torch.optim.Adam
+
+  sgd_nesterov:
+    base_lr: 0.001
+    momentum: 0.9
+    nesterov: true
+    implementation: torch.optim.SGD
+
+  adagrad:
+    base_lr: 0.001
+    initial_accumulator_value: 0.0
+    implementation: torch.optim.Adagrad
+
+  rmsprop:
+    base_lr: 0.001
+    alpha: 0.99         # smoothing constant
+    epsilon: 1.0e-8
+    implementation: torch.optim.RMSprop
+
+  sgd:
+    base_lr: 0.001
+    momentum: 0.0
+    nesterov: false
+    implementation: torch.optim.SGD
+
+plot:
+  output_path: figure1_mnist_logistic.png
+  dpi: 150
+  shade_alpha: 0.15     # transparency of std-dev bands
+
+# ---------------------------------------------------------------------------
+# Figure 2 experiment: 2-hidden-layer MLP with dropout on MNIST
+# (non-convex objective; dropout regularization only — no L2)
+# ---------------------------------------------------------------------------
+mlp_experiment:
+  dataset: MNIST
+  data_path: ../data/mnist
+  task: mlp_dropout
+  input_dim: 784
+  num_classes: 10
+  hidden_units: 1000      # two hidden layers, 1000 units each (edited spec)
+  activation: relu
+  dropout_rate: 0.5       # 50% dropout applied to both hidden layers
+  num_epochs: 100         # paper Figure 2 shows ~100 iterations
+  batch_size: 128
+  l2_lambda: 0.0          # dropout only — no L2 weight decay
+  seeds: [0, 1, 2]
+ 
+# Same lr schedule as ex1: alpha_t = base_lr / sqrt(epoch)
+mlp_lr_schedule:
+  rule: inv_sqrt_epoch
+ 
+# Per-optimizer base LRs — kept the same as ex1 for consistency
+mlp_optimizers:
+  adam:
+    base_lr: 0.001
+    beta1: 0.9
+    beta2: 0.999
+    epsilon: 1.0e-8
+    implementation: custom
+ 
+  sgd_nesterov:
+    base_lr: 0.001
+    momentum: 0.9
+    nesterov: true
+    implementation: torch.optim.SGD
+ 
+  adagrad:
+    base_lr: 0.001
+    initial_accumulator_value: 0.0
+    implementation: torch.optim.Adagrad
+ 
+  rmsprop:
+    base_lr: 0.001
+    alpha: 0.99
+    epsilon: 1.0e-8
+    implementation: torch.optim.RMSprop
+ 
+  sgd:
+    base_lr: 0.001
+    momentum: 0.0
+    nesterov: false
+    implementation: torch.optim.SGD
+ 
+mlp_plot:
+  output_path: figure2_mnist_mlp_dropout.png
+  dpi: 150
+  shade_alpha: 0.15
+ 
