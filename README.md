@@ -10,8 +10,7 @@ This repository contains all necessary code and documentation to replicate Diede
 ## Deliverables:
 - Replication script: `run.sh` in this directory - run with necessary permissions
 - All result graphs in results
-- Lab notebook in `./docs/LAB_NOTEBOOK.md`
-- Handwritten report in `./docs/REPORT.pdf`
+- Lab notebook in `./docs`
 - All code in `./src`
 
 ## Compiling and running
