@@ -300,15 +300,13 @@ def run_trial(
 
     costs = []
     for epoch in range(1, num_epochs + 1):
-        # lr schedule: alpha_t = base_lr / sqrt(epoch)
-        epoch_lr = base_lr / math.sqrt(epoch)
-
-        # Update lr without rebuilding (preserves accumulator state)
+        # lr schedule: alpha_t = base_lr / sqrt(epoch) (Adam only)
         if isinstance(optimizer, AdamCustom):
+            epoch_lr = base_lr / math.sqrt(epoch)
             optimizer.set_lr(epoch_lr)
         else:
             for group in optimizer.param_groups:
-                group["lr"] = epoch_lr
+                group["lr"] = base_lr
 
         cost = train_epoch(model, loader, optimizer, l2_lambda, device)
         costs.append(cost)
