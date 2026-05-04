@@ -65,7 +65,7 @@ mlp_experiment:
   task: mlp_dropout
   input_dim: 784
   num_classes: 10
-  hidden_units: 1000      # two hidden layers, 1000 units each (edited spec)
+  hidden_units: 128      # two hidden layers, 128 units each (edited spec)
   activation: relu
   dropout_rate: 0.5       # 50% dropout applied to both hidden layers
   num_epochs: 100         # paper Figure 2 shows ~100 iterations

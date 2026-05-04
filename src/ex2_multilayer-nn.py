@@ -336,7 +336,7 @@ def make_figure(all_costs: dict, cfg: dict):
 
     ax.set_xlabel("iterations over entire dataset (epochs)", fontsize=11)
     ax.set_ylabel("training cost (NLL)", fontsize=11)
-    ax.set_title("MNIST MLP + Dropout (2×1000 hidden, ReLU)", fontsize=13,
+    ax.set_title("MNIST MLP + Dropout (128 hidden, ReLU)", fontsize=13,
                  fontweight="bold")
     ax.set_xlim(1, num_epochs)
     ax.set_ylim(0.0, 2.0)
