@@ -5,11 +5,19 @@ This repository contains all necessary code and documentation to replicate Diede
 - `src` contains all source code and supporting material, like hyperparameters and dependencies
 - `docs` contains all necessary documentation for the repository as well as the development process
 - `results` contains all program output
+- `data` contains all datasets used. "DATA_INDEX.md" explains why each is there and what its used for
+
+## Deliverables:
+- Replication script: `run.sh` in this directory - run with necessary permissions
+- All result graphs in results
+- Lab notebook in `./docs/LAB_NOTEBOOK.md`
+- Handwritten report in `./docs/REPORT.pdf`
+- All code in `./src`
 
 ## Compiling and running
 - All dependencies can be installed manually with `pip install ./src/requirements.txt`
 - Run the script `run.sh` as superuser for full execution.
 
 ## Requirements:
-- Python3.12
+- Python 3.12
 - Libraries in `src/requirements.txt`
